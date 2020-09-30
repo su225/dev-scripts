@@ -29,13 +29,20 @@ if [[ -z ${NUM_CLUSTERS} ]]; then
     export NUM_CLUSTERS=2
 fi
 
-export KIND_CLUSTER_CONFIG="$GOPATH/src/istio.io/istio/prow/config/trustworthy-jwt.yaml" 
-export METALLB_SETUP_REQUIRED=1
+export KIND_CLUSTER_CONFIG="${KIND_CLUSTER_CONFIG:$GOPATH/src/istio.io/istio/prow/config/trustworthy-jwt.yaml}" 
+export METALLB_SETUP_REQUIRED="${METALLB_SETUP_REQUIRED:1}"
+
+CLUSTER_PREFIX="${CLUSTER_PREFIX:-istio}"
 
 for i in $(seq 1 $NUM_CLUSTERS); do
-    export KIND_CLUSTER_NAME="istio-${i}"
-    export METALLB_START_IP="172.18.25${i}.1"
-    export METALLB_END_IP="172.18.25${i}.250"
+    export KIND_CLUSTER_NAME="${CLUSTER_PREFIX}-${i}"
+
+    if [[ "${METALLB_SETUP_REQUIRED}" == 1 ]]; then
+      export METALLB_START_IP="172.18.25${i}.1"
+      export METALLB_END_IP="172.18.25${i}.250"
+    else
+      echo "metallb setup is disabled"
+    fi
 
     $GOPATH/src/istio.io/dev-scripts/kind-up.sh
 done
