@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # MIT License
 #
 # Copyright (c) 2020 Suchith J N
@@ -19,9 +21,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-
-#!/bin/bash
 
 # A simple script to automate provisioning a kind cluster and a load balancer with metallb
 # This is useful for local development and testing Istio or other Kubernetes based projects
